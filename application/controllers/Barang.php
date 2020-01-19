@@ -35,7 +35,7 @@ class Barang extends CI_Controller
 			$row[] = $field->harga;
 			$row[] = $field->tanggal;
 			$row[] = $field->toko;
-
+			
 			$data[] = $row;
 		}
 
