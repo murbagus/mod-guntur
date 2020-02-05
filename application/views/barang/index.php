@@ -26,35 +26,3 @@
     </div>
 
 
-    <script src="<?= base_url('assets/jquery/jquery-2.2.3.min.js') ?>"></script>
-    <script src="<?= base_url('assets/datatables/js/jquery.dataTables.js') ?>"></script>
-
-
-
-    <script type="text/javascript">
-    $.noConflict();
-        var table;
-        jQuery(document).ready(function($) {
-
-            //datatables
-            table = $('#table').DataTable({
-
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-
-                "ajax": {
-                    "url": "<?= site_url('barang/get_data_user') ?>",
-                    "type": "POST"
-                },
-
-
-                "columnDefs": [{
-                    "targets": [0],
-                    "orderable": false,
-                }, ],
-
-            });
-
-        });
-    </script>

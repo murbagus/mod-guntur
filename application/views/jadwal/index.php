@@ -7,17 +7,17 @@
 
             <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="table" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="table1" width="100%" cellspacing="0">
                             <thead>
 
                                 <tr>
 
                                     <th scope="col">No</th>
-                                    <th scope="col">Nama Proyek</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Nomor Telepon</th>
-                                    <th scope="col">Alamat</th>
-                                    <th scope="col">Deskripsi</th>
+                                    <th scope="col">Nama proyek</th>
+                                    <th scope="col">tanggal</th>
+                                    <th scope="col">no_tlp</th>
+                                    <th scope="col">alamat</th>
+                                    <th scope="col">deskripsi</th>
                                    
                                 </tr>
                                 </thead>
@@ -25,36 +25,23 @@
         </div>
     </div>
 
+	<script>
+	$(function () {
+		$('#table1').DataTable({
+		'paging'      : true,
+		'lengthChange': false,
+		'searching'   : false,
+		'ordering'    : true,
+		'info'        : true,
+		'autoWidth'   : false
+		})
+	})
+	</script>
 
-    <script src="<?= base_url('assets/jquery/jquery-2.2.3.min.js') ?>"></script>
-    <script src="<?= base_url('assets/datatables/js/jquery.dataTables.js') ?>"></script>
-
-
-
-    <script type="text/javascript">
-    $.noConflict();
-        var table;
-        jQuery(document).ready(function($) {
-
-            //datatables
-            table = $('#tableku').DataTable({
-
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-
-                "ajax": {
-                    "url": "<?= site_url('jadwal/get_data_user') ?>",
-                    "type": "POST"
-                },
-
-
-                "columnDefs": [{
-                    "targets": [0],
-                    "orderable": false,
-                }, ],
-
+	<script type="text/javascript">
+            $(document).ready(function() {
+                $('#table1').dataTable();
             });
+        </script>
 
-        });
-    </script>
+

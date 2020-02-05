@@ -22,4 +22,4 @@
 
 </head>
 
-<body>
+<body class="bg-gradient-success">

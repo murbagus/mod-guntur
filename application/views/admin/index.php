@@ -1,128 +1,178 @@
-<!-- Begin Page Content -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+</nav>
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-3 mt-4 text-gray-800"><?= $title; ?></h1>
-
-    <!-- Topbar Search -->
-
-    <div class="row mr-8 mb-3">
-        <div class="col-md-4 mt-1">
-            <form action="<?= base_url('admin'); ?>" method="post">
-                <div class="input-group mb-0">
-                    <input type="text" autocomplete="off" name="keyword" class="form-control" placeholder="Cari Data..." autofocus>
-                    <div class="input-group-append">
-                        <input class="btn btn-primary" type="submit" name="submit">
+    <!-- Content Header (Page header) -->
+ <!-- Topbar -->
+ 
+      <section class="content">
+        <div class="row">
+            <div class="col-sm">
+                <!-- Advanced Tables -->
+                <div class="panel panel-success">
+                    <div class="panel-heading" style="font-size: 20px;">
+                    Daftar Data Barang
+                        <span title="Tambah Data">
+                            <button style="float: right;" class="btn-md btn btn-success"data-toggle="modal" data-target="#myModal">
+                                <b>+ Tambah</b>
+                            </button>
+                        </span>
                     </div>
-                </div>
-
-        </div>
-    </div>
-    </form>
-
-    <!-- Notifikasi -->
-
-    <?php if ($this->session->flashdata('flash')) : ?>
-        <div class="row mt-3">
-
-            <div class="col-md-6">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data <strong>Berhasil</strong>
-                    <?= $this->session->flashdata('flash'); ?>
-                    <td></td>
-                    Pada Tanggal <strong><?= date('d-m-Y'); ?></strong>
-                    <br>
-                    Pukul : <?= date('H:i:s'); ?> WIB.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-
-                    </button>
-                </div>
-
-            </div>
-
-
-        </div>
-    <?php endif; ?>
-
-
-
-
-    <!-- Judul ditabel -->
-    <div class="card shadow mb-4 mt-0">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Pak Deh Furniture</h6>
-        </div>
-
-        <!-- input data di index -->
-
-        <div class="row mt-2">
-            <div class="col-md-12">
-                <div class="row mb-2 col-3 mr-auto float-right">
-                    <a href="<?= base_url('admin/tambah'); ?>" class="btn btn-outline-primary ml-5">Tambah Data Barang</a>
-                </div>
-                <!-- Body tabel -->
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-
-                                <tr>
-
-                                    <th scope="col">No</th>
-                                    <th scope="col">Kategori</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Harga</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Toko</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-                                <?php $mulai; ?>
-                                <?php foreach ($daftar as $d) : ?>
+					
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
                                     <tr>
-                                        <th scope="row"><?= ++$mulai; ?></th>
-                                        <td><?= $d['kategori']; ?></td>
-                                        <td><?= $d['nama']; ?></td>
-                                        <td><?= $d['harga']; ?></td>
-                                        <td><?= Date('d-m-Y', strtotime($d['tanggal'])); ?></td>
-                                        <td><?= $d['toko']; ?></td>
-
-                                        <td>
-                                            <a href="<?= base_url(); ?>admin/view/<?= $d['id']; ?>" class="badge badge-success">detail</a>
-                                            <a href="<?= base_url(); ?>admin/ubah/<?= $d['id']; ?>" class="badge badge-primary">ubah</a>
-                                            <a href="<?= base_url(); ?>admin/hapus/<?= $d['id']; ?>" class="badge badge-danger" onclick="return confirm('yakin?'); ">hapus</a>
-                                        </td>
-
+                                        <th>No.</th>
+                                        
+                                        <th>Kategori</th>
+                                        <th>Nama</th>
+                                        <th>Harga</th>
+                                        <th>Tanggal</th>
+                                        <th>Toko</th>
+                                        <th>Action</th>
                                     </tr>
+                                </thead>
+                                <tbody>
 
-                                <?php endforeach; ?>
+                                        <?php $i = 1 ; foreach ($daftar as $row ) { ?>
+                                    
+                                        <tr class="odd gradeX">
+                                            <td>
+                                              <?= $i++; ?>
+                                            </td>
+                                         
+                                            <td>
+                                              <?= $row['kategori']; ?>
+                                            </td>
+                                            <td>
+                                               <?= $row['nama']; ?> 
+                                            </td>
+                                            <td>
+                                               <?= $row['harga']; ?> 
+                                            </td>
+                                            <td>
+                                               <?= date('d F Y', strtotime($row['tanggal'])); ?> 
+                                            </td>
+                                            <td>
+                                                <?= $row['toko']; ?>
+                                            </td>
+                                          
+                                            <td>
+                                                <a id="edit_data" data-toggle="modal" data-target="#edit" 
+												data-kat="<?= $row['kategori']; ?>" 
+												data-nm="<?= $row['nama']; ?>" 
+												data-hrg="<?= $row['harga']; ?>" 
+												data-tgl="<?= $row['tanggal']; ?>" 
+												data-tko="<?= $row['toko']; ?>" 
+												class="btn-circle btn-warning btn-md" title="Ubah Data"><i class="fa fa-edit"> </i></a>
 
-                            </tbody>
-                            <?php if (empty($daftar)) : ?>
-                                <tr>
-                                    <td colspan="7">
-                                        <div class="alert alert-danger" role="alert">
-                                            <h4 class="alert-heading">Data Tidak Ada!</h4>
-                                            <p>Silakan Masukan Data Terlebih Dahulu.</p>
+                                                <a onclick="return confirm('Apakah anda yakin ingin menghapus data?')" href="<?= base_url().'admin/daftar_hapus/'.$row['id']; ?>" class="btn-circle btn-danger btn-md" title="Hapus Data"><i class="fa fa-trash"> </i></a>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                </tbody>
+
+                               
+                            </table>
+                        </div>
+
+                        <!--  Halaman Tambah-->
+                        <div class="panel-body">
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Form Tambah Data</h4>
                                         </div>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
+                                        <div class="modal-body">
+                                            <form role="form" action="<?= base_url("admin/tambahdaftar"); ?>" method="POST">
+                                                <div class="form-group">
+                                                    <label>Kategori</label>
+                                                    <input class="form-control" name="kategori" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Nama</label>
+                                                    <input class="form-control" rows="3" name="nama" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Harga</label>
+                                                    <input class="form-control" type="number" name="harga" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Tanggal</label>
+                                                    <input class="form-control" type="date" name="tanggal" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Toko</label>
+                                                    <input class="form-control" name="toko" />
+                                                </div>
+                                                
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                            <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        </table>
+                        
+                            <!-- Akhir Halaman Tambah -->
 
+                            <!-- Halaman Ubah -->
+                            <div class="panel-body">
+                                <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">Form Ubah Data</h4>
+                                            </div>
+                                            <div class="modal-body" id="modal_edit">
+                                                <form role="form" action="<?= base_url("admin/daftar_update"); ?>" method="POST">
+												
+                                                    <div class="form-group">
+                                                        <label>Kategori</label>
+                                                        <input class="form-control" name="kategori" id="kategori" />
+                                                    </div>
+                                                    <div>
+                                                        <label>Nama</label>
+                                                        <input class="form-control" name="nama" id="nama" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Harga</label>
+                                                        <input class="form-control" name="harga" id="harga" readonly />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tanggal</label>
+                                                        <input class="form-control" name="tanggal" id="tanggal" type="date" />
+                                                    </div>
 
-                        <?= $this->pagination->create_links(); ?>
+                                                    <div class="form-group">
+                                                        <label>Toko</label>
+                                                        <input class="form-control" name="toko" id="toko" />
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                                <button type="submit" name="ubah" class="btn btn-primary">Simpan</button>
+                                                </form>
 
-
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Akhir Halaman Ubah -->
                     </div>
-
                 </div>
-
             </div>
-        </div>
-    </div>
-</div>
+        </section>
+		
+      </div>
+
+ 

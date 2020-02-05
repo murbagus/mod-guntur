@@ -6,28 +6,28 @@ class Daftar_model extends CI_Model
     {
         $query = $this->db->get('daftar');
         return $query->result_array();
-    }
+	}
+	
+	// fungsi crud
+	function insert_data($data,$table) 
+	{
+		$this->db->insert($table,$data);
+	}
 
-    public function getBarangById($id)
-    {
-        return $this->db->get_where('daftar', ['id' => $id])->row_array();
-    }
+	function update_data($where,$data,$table)
+	{
+		$this->db->where($where);
+		$this->db->update($table,$data);
+	}
 
-    public function getDaftar($limit, $start, $keyword = null)
-    {
-        if ($keyword) {
-            $this->db->like('kategori', $keyword);
-            $this->db->or_like('nama', $keyword);
-            $this->db->or_like('harga', $keyword);
-            $this->db->or_like('tanggal', $keyword);
-            $this->db->or_like('toko', $keyword);
-        }
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('daftar', $limit, $start)->result_array();
-    }
+	function edit_data($where,$table)
+	{
+		return $this->db->get_where($table,$where);
+	}
 
-    public function countAllDaftar()
-    {
-        return $this->db->get('daftar')->num_rows();
-    }
+	function delete_data($where,$table)
+	{
+		$this->db->delete($table,$where);
+	}
+
 }
