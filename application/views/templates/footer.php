@@ -36,7 +36,7 @@
 	  <script src="<?= base_url('assets/vendor/bootstrap/js/bootstrap.js') ?>"></script>
     	<script src="<?= base_url('assets/datatables/js/jquery.dataTables.js') ?>"></script>
     	<script src="<?= base_url('assets/datatables/js/dataTables.bootstrap4.js') ?>"></script>
-<!-- 
+
       <script>
           $('.form-check-input').on('click', function() {
 
@@ -66,7 +66,7 @@
               let fileName = $(this).val().split('\\').pop();
               $(this).next('.custom-file-label').addClass("selected").html(fileName);
           })
-      </script> -->
+      </script> 
 
 	 <!-- daftar barang -->
 	  <script>
@@ -76,9 +76,10 @@
       'paging'      : true,
       'lengthChange': false,
       'searching'   : true,
-      'ordering'    : false,
-      'info'        : false,
-      'autoWidth'   : true
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+	  
     })
   })
 </script>

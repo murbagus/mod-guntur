@@ -3,49 +3,80 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Barang extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        is_logged_in();
+        $this->load->library('form_validation');
+		$this->load->model('Daftar_model');
+		date_default_timezone_set('Asia/Jakarta');
+    }
 
-	public function __construct()
-	{
-		parent::__construct();
-		// $this->load->model('Barang_model');
-	}
+    public function index()
+    {
+        $data['title'] = 'Dashboard';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+		$this->session->userdata('email')])->row_array();
+		
+		$data['daftar'] = $this->db->query(
+			"SELECT * FROM daftar"
+		)->result_array();
 
-	public function index()
-	{
-        $data['title'] = "Barangku";
-
-        $this->load->view('templates/header', $data);
-		$this->load->view('templates/sidebar', $data);
-		$this->load->view('templates/topbar', $data);
-		$this->load->view('barang/index', $data);
-		 $this->load->view('templates/footer', $data);
-	}
-
-	// public function get_data_barang()
-	// {
-	// 	$list = $this->Barang_model->get_datatables();
-	// 	$data = array();
-	// 	$no = $_POST['start'];
-	// 	foreach ($list as $field) {
-	// 		$no++;
-	// 		$row = array();
-	// 		$row[] = $no;
-	// 		$row[] = $field->kategori;
-	// 		$row[] = $field->nama;
-	// 		$row[] = $field->harga;
-	// 		$row[] = $field->tanggal;
-	// 		$row[] = $field->toko;
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('barang/index', $data);
+            $this->load->view('templates/footer');
+		}
+		
+		public function tambahdaftar(){
 			
-	// 		$data[] = $row;
-	// 	}
+			$data = [
+				'kategori'	=> $this->input->post('kategori'),
+				'nama'	=> $this->input->post('nama'),
+				'harga'	=> $this->input->post('harga'),
+				'tanggal'	=> $this->input->post('tanggal'),
+				'toko'	=> $this->input->post('toko')
+			];
+			// die(print_r($data));
+			 $this->db->insert('daftar', $data);
+			 $this->session->set_flashdata('flash', 'Ditambahkan');
+			 redirect('barang');
+		}
 
-	// 	$output = array(
-	// 		"draw" => $_POST['draw'],
-	// 		"recordsTotal" => $this->Barang_model->count_all(),
-	// 		"recordsFiltered" => $this->Barang_model->count_filtered(),
-	// 		"data" => $data,
-	// 	);
-	// 	//output dalam format JSON
-	// 	echo json_encode($output);
-	// }
+		public function daftar_update($id){
+			
+			$kategori = $this->input->post('kategori');
+			$nama = $this->input->post('nama');
+			$harga = $this->input->post('harga');
+			$tanggal = $this->input->post('tanggal');
+			$toko = $this->input->post('toko');
+
+			$where = [
+				'id' => $id
+			];
+
+			$data = [
+				'kategori' => $kategori,
+				'nama' => $nama,
+				'harga' => $harga,
+				'tanggal' => $tanggal,
+				'toko' => $toko
+			];
+		
+			$this->Daftar_model->update_data($where,$data,'daftar');
+			redirect('barang');
+
+	}
+	
+	public function daftar_hapus($id) {
+		$where = [
+			'id' => $id
+		];
+
+		$this->Daftar_model->delete_data($where, 'daftar');
+		$this->session->set_flashdata('flash', 'Dihapus');
+		redirect('barang');
+	}
 }
+
