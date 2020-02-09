@@ -75,11 +75,13 @@
                                           
                                             <td>
                                                 <a id="edit_data" data-toggle="modal" data-target="#edit" 
-												data-kat="<?= $row['kategori']; ?>" 
-												data-nm="<?= $row['nama']; ?>" 
-												data-hrg="<?= $row['harga']; ?>" 
-												data-tgl="<?= $row['tanggal']; ?>" 
-												data-tko="<?= $row['toko']; ?>" 
+												data-id="<?= $row['id']; ?>"
+												data-kategori="<?= $row['kategori']; ?>" 
+												data-nama="<?= $row['nama']; ?>" 
+												data-harga="<?= $row['harga']; ?>" 
+												data-tanggal="<?= $row['tanggal']; ?>" 
+												data-toko="<?= $row['toko']; ?>" 
+												data-url="<?= base_url("barang/daftar_update/") . $row['id']; ?>"
 												class="btn-circle btn-warning btn-md" title="Ubah Data"><i class="fa fa-edit"> </i></a>
 
                                                 <a onclick="return confirm('Apakah anda yakin ingin menghapus data?')" href="<?= base_url().'barang/daftar_hapus/'.$row['id']; ?>" class="btn-circle btn-danger btn-md" title="Hapus Data"><i class="fa fa-trash"> </i></a>
@@ -148,7 +150,7 @@
                                                 <h4 class="modal-title" id="myModalLabel">Form Ubah Data</h4>
                                             </div>
                                             <div class="modal-body" id="modal_edit">
-                                                <form role="form" action="<?= base_url("barang/daftar_update"); ?>" method="POST">
+                                                <form role="form" action="<?= base_url("barang/daftar_update"); ?>" id="form-modal-edit" method="POST">
 												
                                                     <div class="form-group">
                                                         <label>Kategori</label>

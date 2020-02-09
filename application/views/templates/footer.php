@@ -98,8 +98,11 @@
                 var harga = $(this).data('harga');
                 var tanggal = $(this).data('tanggal');
                 var toko = $(this).data('toko');
+                var url = $(this).data('url');
 
-               
+				// Mengganti isi attr form action
+				$("#modal_edit #form-modal-edit").attr("action", url);
+
                 $("#modal_edit #id").val(id);
                 $("#modal_edit #kategori").val(kategori);
                 $("#modal_edit #nama").val(nama);
